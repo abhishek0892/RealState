@@ -1,0 +1,104 @@
+body {
+  font: 16px/1.5 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #787876;
+ // background-image: url('/images/background.png');
+  //background-color:  !important;
+}
+
+h1, h3 {
+  font-weight: 300;
+  margin-bottom: 5px;
+}
+
+a {
+  text-decoration: none;
+  color: #EA6045;
+}
+
+a:hover {
+  color: #2F3440;
+}
+
+.container {
+  width: 90%;
+  margin: 0px auto;
+}
+
+footer {
+  margin-top: 30px;
+  border-top: 1px solid #efefef;
+  padding-top: 20px;
+  font-style: italic;
+}
+
+@media (min-width: 600px){
+  .container {
+    width: 60%;
+  }
+}
+.border {
+  border:1px solid blue;
+  line-height:2em;
+}
+.container-bg {
+  background: gray;
+}
+.navbar-inverse {
+  background-color: #2A6496 !important;
+}
+.row {
+  margin-left: 5px !important;
+  margin-right :5px !important;
+  height: auto;
+}
+.footer {
+    background-color: #2A6496 !important;
+    margin-bottom: 30px !important;
+    //hieght:5%;
+}
+
+.login-center {
+  margin-top: 120px;
+}
+.container-fluid {
+  height: 100%;
+ // overflow-y: hidden; /* don't show content that exceeds my height */
+}
+.nav-sign-icon {
+    margin-top: -9px;
+    margin-bottom: -23px;
+    color: white;
+    display: inline;
+}
+.nav-icon{
+    margin-top: 0px;
+    margin-bottom: -8px;
+    color: white;
+}
+label{
+    display: inline-block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.navbar-nav>li>a:hover{
+    background-color: #14445E !important;
+}
+fieldset{
+    padding: .35em .625em .75em !important;
+    margin: 0 2px !important;
+    border: 1px solid #c0c0c0 !important;
+    height: auto;
+
+}
+.user_info_row{
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+    height: auto;
+    //overflow:hidden;
+}
+div{
+    overflow-x:hidden;
+    overflow-y:auto ;
+}

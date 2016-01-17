@@ -1,0 +1,180 @@
+<html>
+<head>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <script src="http://www.iclubz.com/js/jquery.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script type="text/javascript">
+
+        function loadUserInfo() {
+
+            //alert(JSON.stringify(<%=user%>));
+            document.getElementById("name").innerHTML = "<%=user.name%>";
+            document.getElementById("username").innerHTML = "<%=user.username%>";
+            document.getElementById("mobile").innerHTML = "<%=user.mobile%>";
+            document.getElementById("role").innerHTML = "<%=user.role%>";
+        }
+        function updateUserInfo() {
+
+           // alert(document.getElementById("username").innerHTML);
+            document.getElementById("e_name").value = $("#name").html();
+            document.getElementById("e_username").innerHTML = $("#username").html();
+            document.getElementById("e_mobile").value = $("#mobile").html();
+            document.getElementById("e_role").innerHTML = $("#role").html();
+        }
+
+    </script>
+</head>
+<body class="img-responsive" onload="loadUserInfo()" >
+<header>
+    <style>
+        body        { padding-top:80px; }
+    </style>
+    <script>
+        function updateProfile(){
+           /* $('#name').html("<%=user.name%>");
+            $('#mobile').html("<%=user.mobile%>");
+            $('#username').html("<%=user.username%>");
+            $('#role').html("<%=user.role%>");*/
+            var form  = $('#updateForm').html();
+
+            $.ajax({
+                type: "get",
+                url: '/user/account/updatedUser/<%=user.username%>',
+                contentType:'json',
+                success: function(user){
+                    if(!user.user){
+                        location.reload();
+                    }
+                    $('#name').html(user.user.name)
+                    $('#mobile').html(user.user.mobile);
+                    $('#username').html(user.user.username);
+                    $('#role').html(user.user.role);
+
+                    /!*document.getElementById("name").innerHTML = "abhishek";*!/             //  works as well
+                }
+        });
+        }
+
+    </script>
+
+</header>
+
+
+<div class="container-fluid">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="row">
+                <% include navbar%>
+                <div class="navbar-collapse collapse col-md-4 pull-right">
+                    <ul class="nav navbar-nav">
+                        <li id="signin" class="pull-right"><a href="/user/account/logout"><h3 class="nav-sign-icon"><span class="fa fa-sign-in"> SignOut</span></h3></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <h3>Tabs With Dropdown Menu</h3>
+        <div class=" navbar-inverse">
+            <ul class="nav nav-pills">
+                <li class="active"><a data-toggle="pill" href="#user_info"  id="info">UserInfo</a></li>
+                <li><a data-toggle="pill" href="#add"  id="address">Address</a></li>
+            </ul>
+
+        </div>
+
+        <div >
+            <div id="user_info" class=" tab-pane fade in active">
+               <%include user_info%>
+            </div>
+            <div id="add" class="tab-pane fade ">
+                <%include address%>
+            </div>
+
+            <div id="editprofile" class="tab-pane fade container">
+                <fieldset>
+                    <legend>Edit Profile</legend>
+
+                <form id="updateForm" action="/user/account/userEditProfile" method="post" >
+
+                            <div class="user_info_row">
+                                    <div class=" col-md-2 info_label">Role</div>
+                                    <div id="e_role" class="col-md-6"></div>
+                            </div>
+
+
+                            <div class="user_info_row">
+                                <div class="info-lebel col-md-2">Email</div>
+                                <div id="e_username" class="col-md-6 col-sm-3"></div>
+                            </div>
+
+
+                            <div class="user_info_row">
+                                <div class="col-md-2"><label>Name</label></div>
+                                <div class="col-md-6 col-sm-3"><input type="text" class="form-control" name="name" id="e_name"></div>
+                            </div>
+
+
+                            <div class="user_info_row">
+                                <div class="col-md-2"><label>Mobile</label></div>
+                                <div class="col-md-6 col-sm-3"> <input type="text" class="form-control" name="mobile" required="true" id="e_mobile"> </div>
+                            </div>
+
+                        <button type="submit" class="btn btn-warning btn-lg" >Submit</button>
+                        <button type="button" class="btn btn-warning btn-lg pull-right" data-toggle="pill" href="/user/account/userProfile/" data-target="#user_info" onclick="updateProfile()">Cancel</button>
+                        <script type="text/javascript">
+                            $("#updateForm").submit(function(event) {
+
+                                alert('came');
+                                /* stop form from submitting normally */
+                                event.preventDefault();
+
+                                /* get some values from elements on the page: */
+                                var $form = $( this ),
+                                        url = $form.attr( 'action' );
+
+                                /* Send the data using post */
+                                var posting = $.post( url, { username:"<%=user.username%>",mobile: $('#e_mobile').val(), name: $('#e_name').val(), role:"<%=user.role%>"} );
+                               // var all =$(":input");
+                                alert($('#e_mobile').val());
+                                //var posting = $.post( url, { forms:$(":input") } );
+
+                                /* Alerts the results */
+                                posting.done(function( data ) {
+                                    alert(JSON.stringify(data));
+                                    //alert(data.user.mobile);
+                                    //alert(data.message);
+                                   // $('#e_mobile').val = data.user.mobile;
+                                    //alert($('#e_mobile').val());
+                                    if(!data.user){
+                                        location.reload();
+                                    }
+
+                                },"json");
+                            });
+
+                        </script>
+
+
+                </form>
+
+            </fieldset>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+</div>
+<footer class="footer"> <% include footer %> </footer>
+</body>
+</html>

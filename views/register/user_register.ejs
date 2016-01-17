@@ -1,0 +1,52 @@
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+</head>
+<body>
+<header>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+    <% include ./header %>
+    <% include ./navbar %>
+</header>
+<h1><%= title %></h1>
+<p>Welcome to <%= title %></p>
+
+<div class="container">
+    <div class="col-sm-6 col-sm-offset-3">
+        <h1><span class="fa fa-sign-in"> Signup</span></h1>
+        <% if(message.length>0) {%>
+            <div class="alert alert-danger"> <%= message%></div>
+        <%}%>
+        <form action="/signup" method="post">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" name="name">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="text" class="form-control" name="email">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" name="password">
+            </div>
+            <%include address%>
+        </form>
+
+
+    </div>
+</div>
+
+
+
+
+
+<footer>
+    <% include ./footer %>
+</footer>
+</body>
+</html>

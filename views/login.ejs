@@ -1,0 +1,59 @@
+<html>
+<head>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+</head>
+<body>
+<header>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+    <style>
+        body        { padding-top:80px; }
+    </style>
+</header>
+<div class="container-fluid">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="row">
+                <% include navbar%>
+                <div class="navbar-collapse collapse col-md-4 pull-right">
+                    <ul class="nav navbar-nav">
+                        <li id="signin" class="pull-right"> <a  href="/user/register/user_register">  <h3 class="nav-sign-icon"><span class="fa fa-sign-in"> Signin</span></h3></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="row login-center">
+    <div class="col-md-4 col-md-offset-4 border ">
+
+        <h1 class="text-center"><span class="fa fa-sign-in " > Sing in </span></h1>
+        <% if(message.length>0) {%>
+             <div class="alert alert-danger"> <%= message%></div>
+        <%}%>
+        <form action="/user/login" method="post" >
+            <div class="form-group">
+                <label class="label-check"><Strong>Email:</Strong></label>
+                <input type="text" class="form-control" name="username" id="username">
+            </div>
+
+            <div class="form-group">
+                <label class="label-check"><Strong>Password:</Strong></label>
+                <input type="password" class="form-control" name="password" id="password">
+            </div>
+
+            <button type="submit" class="btn btn-warning btn-lg">Sign-in</button>
+        </form>
+        <hr>
+        <p> Already have an account? <a href="/login">Login</a></p>
+        <p>Or go <a href="/">Home</a></p>
+        </hr>
+    </div>
+</div>
+
+</div>
+<footer class="footer"> <% include footer %> </footer>
+</body>
+</html>

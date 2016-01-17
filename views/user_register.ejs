@@ -1,0 +1,91 @@
+<html lang="en">
+
+<head>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+</head>
+<body class="img-responsive">
+<header>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+    <style>
+        body        { padding-top:80px; }
+    </style>
+</header>
+
+
+<div class="container-fluid">
+    <div class="container-fluid">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="row">
+                    <% include navbar%>
+                    <div class="navbar-collapse collapse col-md-4 pull-right">
+                        <ul class="nav navbar-nav">
+                            <li id="signin" class="pull-right"><a href="/user/login"><h3 class="nav-sign-icon"><span class="fa fa-sign-in"> Signin</span></h3></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-md-8 someclass" >
+            <h1>Welcome to Real Estate Portal.</h1>
+        </div>
+    <div class="col-md-3 col-sm-3 pull-right  border">
+
+        <h1><span class="fa fa-sign-in"> Signup</span></h1>
+        <% if(errors.length>0) {%>
+            <div class="alert alert-danger"> <%= errors[0].msg%></div>
+        <%}%>
+        <form action="/user/register/user_register" method="post" id="registerForm">
+            <div class="form-group">
+                <label>Signup as :</label>
+                <select class="form-control" id="role" name="role">
+                    <option>User</option>
+                    <option>Owner</option>
+                    <option>Agent</option>
+                    <option>Buyer</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" name="name" required="true">
+            </div>
+            <div class="form-group">
+                <label class="form-group required">Email</label>
+                <input type="text" class="form-control" name="username" id="username" required="true">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" name="password" id="password" required="true">
+            </div>
+            <div class="form-group">
+                <label class="form-group required">Mobile</label>
+                <input type="text" class="form-control" name="mobile" required="true">
+            </div>
+
+            <button type="submit" class="btn btn-warning btn-lg" id="submit">Signup</button>
+            <!--<script>
+                $("#submit").click(function () {
+                    var feedback = $("#registerForm").val();
+
+                    $.post('/user/register/user_signup/', {
+                        feedback: feedback
+                    });
+                });
+            </script>-->
+        </form>
+        <hr>
+            <p> Already have an account? <a href="/login">Login</a></p>
+            <p>Or go <a href="/">Home</a></p>
+        </hr>
+    </div>
+    </div>
+    <footer class="footer"> <% include footer %> </footer>
+</div>
+    </div>
+</body>
+</html>
