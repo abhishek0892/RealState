@@ -1,0 +1,197 @@
+<html>
+<head>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <!-- load fontawesome -->
+    <script src="http://www.iclubz.com/js/jquery.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <script type="text/javascript">
+
+        function loadUserInfo() {
+            //alert(JSON.stringify(<%=user%>));
+            document.getElementById("name").innerHTML = "<%=user.name%>";
+            document.getElementById("username").innerHTML = "<%=user.username%>";
+            document.getElementById("mobile").innerHTML = "<%=user.mobile%>";
+            document.getElementById("role").innerHTML = "<%=user.role%>";
+        }
+        function updateUserInfo() {
+
+            // alert(document.getElementById("username").innerHTML);
+            document.getElementById("e_name").value = $("#name").html();
+            document.getElementById("e_username").innerHTML = $("#username").html();
+            document.getElementById("e_mobile").value = $("#mobile").html();
+            document.getElementById("e_role").innerHTML = $("#role").html();
+        }
+
+        function loadAllProperties() {
+            var ul = document.getElementById("prorperty_list");
+            //  var html = document.getElementById("some");
+            $.ajax({
+                type: "get",
+                url: '/owner/account/getPropertyList',
+                contentType: 'text/html',
+                success: function (html) {
+                    alert(html);
+                    <% for(var i=0;i<user.properties.length;i++){%>
+                        alert("add");
+                        var li = document.createElement("li");
+                        li.setAttribute("id", "listID");
+                        $html = $(html);
+                        $html.find('#name').html("<%=user.properties[i].name%>");
+                        $html.find('#bhk').html("<%=user.properties[i].bhk%>");
+                        $html.find('#bathroom').html("<%=user.properties[i].bathroom%>");
+                        $html.find('#kitchen').html("<%= user.properties[i].kitchen%>")
+                        li.innerHTML = $html.html();
+                        jQuery("#listID").append("<hr />");
+                        ul.appendChild(li);
+
+                    <%}%>
+
+
+                }
+            });
+            //   var getImport = document.querySelector('#propertylistimport');
+            // li.innerHTML = getImport;
+
+        }
+
+    </script>
+</head>
+<body class="img-responsive" onload="loadUserInfo()">
+<header>
+    <style>
+        body {
+            padding-top: 80px;
+        }
+    </style>
+    <script>
+        function updateProfile() {
+            /* $('#name').html("
+            <%=user.name%>");
+             $('#mobile').html("
+            <%=user.mobile%>");
+             $('#username').html("
+            <%=user.username%>");
+             $('#role').html("
+            <%=user.role%>");*/
+            var form = $('#updateForm').html();
+
+            $.ajax({
+                type: "get",
+                url: '/owner/account/getUpdatedOwner/<%=user.username%>',
+                contentType: 'json',
+                success: function (user) {
+                    if (!user.user) {
+                        location.reload();
+                    }
+                    $('#name').html(user.user.name)
+                    $('#mobile').html(user.user.mobile);
+                    $('#username').html(user.user.username);
+                    $('#role').html(user.user.role);
+
+                    /!*document.getElementById("name").innerHTML = "abhishek";*!/             //  works as well
+                }
+            });
+        }
+
+    </script>
+
+</header>
+
+
+<div class="container-fluid">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="row">
+                <% include ../navbar %>
+                <div class="navbar-collapse collapse col-md-4 pull-right">
+                    <ul class="nav navbar-nav">
+                        <li id="signin" class="pull-right"><a href="/owner/account/logout"><h3 class="nav-sign-icon">
+                                    <span class="fa fa-sign-in"> SignOut</span></h3></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="cus-container-fluid">
+
+
+        <div class="navbar-inverse row">
+            <ul class="nav nav-pills ">
+                <li class="active"><a data-toggle="pill" href="#user_info" id="info">UserInfo</a></li>
+                <li><a data-toggle="pill" href="#add" id="address">Address</a></li>
+                <li><a data-toggle="pill" href="#property" id="propertypill">Property</a></li>
+            </ul>
+
+        </div>
+
+        <div class="row">
+            <div class="tab-content">
+                <div id="user_info" class=" tab-pane fade in active">
+                    <% include owner_info %>
+                </div>
+                <div id="add" class="tab-pane fade ">
+                    <% include ../address %>
+                </div>
+                <div id="editprofile" class="tab-pane fade ">
+                    <% include owner_edit_info %>
+                </div>
+
+                <div id="property" class="tab-pane fade">
+                    <div class="container-fluid">
+                        <div class="row margin-top-05 ">
+                            <div class="col-md-offset-9">
+                                <button type="button" class="btn btn-primary  btn-lg pull-right" data-toggle="pill"
+                                        href="/account/userEditProfile/"
+                                        data-target="#addProperty">Add New Property
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row margin-top-05">
+                            <div class="user_info_row tab-content">
+                                <div class="col-md-6">
+                                    <fieldset>
+                                        <legend>User Info</legend>
+
+                                        <ul id="prorperty_list" class="list-unstyled"></ul>
+                                        <script>
+                                            loadAllProperties();
+                                        </script>
+                                        <hr>
+                                    </fieldset>
+                                </div>
+                                <div id="addProperty" class="col-md-6 tab-pane">
+                                    <div class="tab-content divY">
+                                        <div id="propertyLocation" class=" tab-pane fade in active">
+                                            <% include property_location.ejs %>
+                                        </div>
+                                        <div id="addPropertyDetail" class="tab-pane fade ">
+                                            <% include property_detail.ejs %>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <footer class="footer">
+        <% include ../footer %>
+    </footer>
+</div>
+
+</body>
+</html>

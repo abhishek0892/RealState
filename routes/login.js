@@ -9,17 +9,13 @@ router.get('/login', function(req, res) {
     if(req.user){
         res.redirect("account/user_home");
     }
-    res.render('login', {
+    res.render('owner/property', {
         title:"Login",
         message:""
     });
 });
-/* Handle Login POST */
-/*router.post('/login', passport.authenticate('login', {
-    successRedirect: '/user_home',
-    failureRedirect: '/user_home',
-    failureFlash : true
-}));*/
+
+
 
 router.post('/logininfo',function(req, res) {
     console.log(req.user+"som");
@@ -86,4 +82,9 @@ function isAuthenticated(req, res, next) {
     }
     //req.next();
 }
+
+
+
+
+
 module.exports = router;

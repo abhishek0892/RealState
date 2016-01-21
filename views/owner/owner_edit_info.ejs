@@ -1,0 +1,59 @@
+<fieldset>
+    <legend>Edit Profile</legend>
+
+    <form id="updateForm" action="/owner/account/editOwnerProfile" method="post" >
+
+        <div class="user_info_row">
+            <div class=" col-md-2 info_label">Role</div>
+            <div id="e_role" class="col-md-6"></div>
+        </div>
+
+
+        <div class="user_info_row">
+            <div class="info-lebel col-md-2">Email</div>
+            <div id="e_username" class="col-md-6 col-sm-3"></div>
+        </div>
+
+
+        <div class="user_info_row">
+            <div class="col-md-2"><label>Name</label></div>
+            <div class="col-md-6 col-sm-3"><input type="text" class="form-control" name="name" id="e_name"></div>
+        </div>
+
+
+        <div class="user_info_row">
+            <div class="col-md-2"><label>Mobile</label></div>
+            <div class="col-md-6 col-sm-3"> <input type="text" class="form-control" name="mobile" required="true" id="e_mobile"> </div>
+        </div>
+
+        <button type="submit" class="btn btn-warning btn-lg" >Submit</button>
+        <button type="button" class="btn btn-warning btn-lg pull-right" data-toggle="pill" href="/owner/account/userProfile/" data-target="#user_info" onclick="updateProfile()">Cancel</button>
+        <script type="text/javascript">
+            $("#updateForm").submit(function(event) {
+
+                alert('came');
+                /* stop form from submitting normally */
+                event.preventDefault();
+
+                /* get some values from elements on the page: */
+                var $form = $( this ),
+                        url = $form.attr( 'action' );
+
+                /* Send the data using post */
+                var posting = $.post( url, { username:"<%=user.username%>",mobile: $('#e_mobile').val(), name: $('#e_name').val(), role:"<%=user.role%>"} );
+
+                posting.done(function( data ) {
+                    alert(JSON.stringify(data));
+                    if(!data.user){
+                        location.reload();
+                    }
+
+                },"json");
+            });
+
+        </script>
+
+
+    </form>
+
+</fieldset>

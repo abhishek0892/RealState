@@ -1,0 +1,55 @@
+<div id="addPropertyLocation" class="col-md-7  pull-right">
+    <fieldset>
+        <div class="">
+            <legend>Add your property detail</legend>
+
+            <form id="propLocation" action="/owner/account/addPropertyLocation" method="post" >
+                <div class="form-group">
+                    <label>Zipcode</label>
+                    <input type="text" class="form-control" name="zipcode" required="true">
+                </div>
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text" class="form-control" name="city" required="true">
+                </div>
+                <div class="form-group">
+                    <label>State</label>
+                    <input type="text" class="form-control" name="state">
+                </div>
+                <div class="form-group">
+                    <label>Country</label>
+                    <input type="text" class="form-control" name="country">
+                </div>
+                <button type="submit" class="btn btn-warning btn-lg">Add Location</button>
+
+                <script type="text/javascript">
+                    $("#propLocation").submit(function(event) {
+                        event.preventDefault();
+                        var $form = $(this );
+                        var url = $form.attr( 'action' );
+                        alert(url+"url");
+                        var formData = $form.serialize();
+                        alert(formData+"data");
+                        /* Send the data using post */
+                        var posting = $.post( url,formData );
+                        posting.done(function( data ) {
+                            if(!data.user){
+//                                location.reload();
+                            }
+                                alert("dher");
+                            $("#propertyLocation").removeClass('in active');
+                            $("#addPropertyDetail").addClass('in active');
+                            alert("dherp b");
+                            var prop_detail_url = $('#propertyDetailForm').attr('action') +"?"+ data.addressId;
+                            $('#propertyDetailForm').attr('action', prop_detail_url);
+
+
+                        },"json");
+                    });
+
+                </script>
+
+            </form>
+        </div>
+    </fieldset>
+</div>

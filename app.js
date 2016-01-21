@@ -9,7 +9,8 @@ var passport = require('passport');
 var expressSession = require('express-session');
 var LocalStrategy = require('passport-local').Strategy;
 var flash = require('connect-flash');
-
+var uiid = require('node-uuid');
+var _ = require('underscore')
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/nodetest1');
@@ -20,6 +21,7 @@ var users = require('./routes/users');
 var login = require('./routes/login');
 var register = require('./routes/register');
 var account = require('./routes/account');
+var owner_account = require('./routes/owner/owner_account');
 var app = express();
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -143,7 +145,15 @@ passport.use('user_register', new LocalStrategy({
             if (!user) {
                 console.log("if user not exist");
                 var collection = db.get("users");
-                collection.insert(req.body, function (er, user) {
+                console.log(JSON.stringify(user)+"soer1");
+                var myuser  = req.body;
+                var properties = {properties:[]};
+                console.log(properties+"sdaf");
+              //  jQuery.extend(myuser, properties);
+                // var merged_user =   _.extend(myuser, properties);
+                var merged_user = JSON.parse((JSON.stringify(myuser) + JSON.stringify(properties)).replace(/}{/g,","))
+
+                collection.insert(merged_user, function (er, user) {
                     if (er || !user) {
                         console.log("if something exist");
                         res.send("Something went wrong while user register");
@@ -165,6 +175,7 @@ app.use('/', routes);
 app.use('/user',login);
 app.use('/user/register', register);
 app.use('/user/account',account);
+app.use('/owner/account',owner_account);
 
 
 // catch 404 and forward to error handler

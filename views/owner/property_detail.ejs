@@ -1,0 +1,68 @@
+<div id="property_detail" class="col-md-7  pull-right">
+    <fieldset>
+        <legend>Detail</legend>
+        <form action="/owner/account/addPropertyDetailForm" method="post" id="propertyDetailForm">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" name="name" required="true">
+            </div>
+            <div class="form-group">
+                <label>BHK</label>
+                <select class="form-control" id="bhk" name="bhk">
+                    <option>1BHK</option>
+                    <option>2BHK</option>
+                    <option>3BHK</option>
+                    <option>4BHK</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Bathrooms</label>
+                <select class="form-control" id="bathroom" name="bathroom">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Kitchens</label>
+                <select class="form-control" id="kitechen" name="kitechen">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Price/SqrFT</label>
+                <input type="text" class="form-control" name="priceSqr">
+            </div>
+            <div class="form-group">
+                <label>Total Area</label>
+                <input type="text" class="form-control" name="area">
+            </div>
+            <div class="form-group">
+                <label>Price</label>
+                <input type="text" class="form-control" name="price" required="true">
+            </div>
+            <button type="submit" class="btn  btn-lg"  id="submitPropoertyDetail"> Add
+                Detail
+            </button>
+            <script type="text/javascript">
+                $("#propertyDetailForm").submit(function (event) {
+                    event.preventDefault();
+                    var $form = $(this).data(),
+                            url = $form.attr("action");
+                    var data = $form.serialize();
+
+                    var posting = $.post(url, data);
+                    posting.done(function (user) {
+                        if (!user) {
+                            location.reload();
+                        }
+                    });
+                }, 'json');
+
+            </script>
+        </form>
+    </fieldset>
+</div>
